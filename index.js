@@ -7,7 +7,7 @@ const io = require('socket.io')(server, {
     methods: ['GET', 'POST'],
   }})
 
-  server('/', (req, res) => {
+  app.get('/', (req, res) => {
     res.send('hi')
   })
 
