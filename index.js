@@ -7,6 +7,10 @@ const io = require('socket.io')(server, {
     methods: ['GET', 'POST'],
   }})
 
+  server('/', (req, res) => {
+    res.send('hi')
+  })
+
   io.on('connection', (socket) => {
     socket.emit('me', socket.id)
 
