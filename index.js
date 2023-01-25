@@ -14,8 +14,8 @@ const io = require('socket.io')(server, {
       socket.broadcast.emit('callEnded')
     })
 
-    socket.on('call', ({userToCall, from, name, signalData}) => {
-      io.to(userToCall).emit('call', {from, name, signal: signalData})
+    socket.on('call', (data) => {
+      io.to(data.userToCall).emit('call', {from: data.from, name: data.name, signal: data.signalData})
     })
 
     socket.on('answer', (data) => {
