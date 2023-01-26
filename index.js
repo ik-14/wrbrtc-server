@@ -1,15 +1,13 @@
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
-const PORT = process.env.PORT || 3001
+const PORT = 3001
 const io = require('socket.io')(server, {
   cors: {
+    origin: '*',
     methods: ['GET', 'POST'],
   }})
 
-  app.get('/', (req, res) => {
-    res.send('hi')
-  })
 
   io.on('connection', (socket) => {
     socket.emit('me', socket.id)
@@ -18,8 +16,8 @@ const io = require('socket.io')(server, {
       socket.broadcast.emit('callEnded')
     })
 
-    socket.on('call', (data) => {
-      io.to(data.userToCall).emit('call', {from: data.from, name: data.name, signal: data.signalData})
+    socket.on('callUser', (data) => {
+      io.to(data.userToCall).emit('callUser', {from: data.from, name: data.name, signal: data.signalData})
     })
 
     socket.on('answer', (data) => {
@@ -27,4 +25,4 @@ const io = require('socket.io')(server, {
     })
   })
 
-  server.listen(PORT, () => {console.log('server is running on port')});
+  server.listen(PORT, () => {console.log('server is running on port' + PORT)});
